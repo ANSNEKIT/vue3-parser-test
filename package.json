@@ -1,7 +1,7 @@
 {
   "name": "vue3-parser-test",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "type": "commonjs",
   "scripts": {
     "serve": "vue-cli-service serve",
