@@ -78,7 +78,7 @@ export default {
         background-size: 15px 15px;
         background-position: right;
         background-origin: content-box;
-        background-color: #f1f1f1;
+        background-color: var(--color-input-bg);
 
         &:active,
         &:focus {

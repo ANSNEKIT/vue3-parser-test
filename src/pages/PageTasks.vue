@@ -4,7 +4,7 @@
             id="0"
             title="SDFlsdjkfj asdfl jasd fja sdf kljhsald"
             article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? Ipsum consequatur, dolorum vero similique exercitationem modi deleniti consectetur necessitatibus? Eaque iusto temporibus possimus quos consequatur fugiat natus sit"
-            keyword="one two"
+            :keyword="['one', 'two']"
             url="http://ya.ru"
         />
 
@@ -12,7 +12,7 @@
             id="1"
             title="SDFlsdjkfj"
             article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? Ipsum consequatur, dolorum vero similique exercitationem modi deleniti consectetur necessitatibus? Eaque iusto temporibus possimus quos consequatur fugiat natus sit"
-            keyword="one two"
+            :keyword="['one', 'two']"
             url="http://ya.ru"
         />
 
@@ -20,7 +20,7 @@
             id="2"
             title="SDFlsdjkfj asdfl jasd fja kljhsald"
             article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. "
-            keyword="one two"
+            :keyword="['one', 'two']"
             url="http://ya.ru"
         />
 
@@ -28,7 +28,7 @@
             id="3"
             title="SDFlsdjkfj asdfl jasd fja sdf kljhsald asdfsdafasdfsadfasdf asdf sadfasdf "
             article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? Ipsum consequatur, dolorum vero similique exercitationem modi deleniti consectetur necessitatibus? Eaque iusto temporibus possimus quos consequatur fugiat natus sit"
-            keyword="one two"
+            :keyword="['one', 'two']"
             url="http://ya.ru"
         />
 
@@ -36,7 +36,7 @@
             id="4"
             title="SDFlsdjkfj asdfl "
             article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus"
-            keyword="one two"
+            :keyword="['one', 'two']"
             url="http://ya.ru"
         />
 
@@ -44,7 +44,7 @@
             id="5"
             title="SDFlsdjkfj"
             article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? "
-            keyword="one two"
+            :keyword="['one', 'two']"
             url="http://ya.ru"
         />
 
@@ -52,7 +52,7 @@
             id="6"
             title="SDFlsdjkfj"
             article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? "
-            keyword="one two"
+            :keyword="['one', 'two']"
             url="http://ya.ru"
         />
     </div>

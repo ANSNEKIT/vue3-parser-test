@@ -1,11 +1,12 @@
 <template>
     <section class="card">
-        <RouterLink :to="{ name: 'Task', params: { id: 1 } }" class="card__title-link">
+        <RouterLink :to="{ name: 'Task', params: { id } }" class="card__title-link">
             <h2 class="card__title">{{ title }}</h2>
         </RouterLink>
         <ul class="card__tags">
-            <li class="card__tag">tag</li>
-            <li class="card__tag">tagasdf</li>
+            <li v-for="(tag, index) in getKeywords" :key="`tag-${index}`" class="card__tag">
+                {{ tag }}
+            </li>
         </ul>
         <p class="card__description">
             {{ article }}
@@ -36,8 +37,14 @@ export default {
             default: '',
         },
         keyword: {
-            type: String,
-            default: '',
+            type: Array,
+            default: () => [],
+        },
+    },
+
+    computed: {
+        getKeywords() {
+            return this.keyword.split(', ');
         },
     },
 };

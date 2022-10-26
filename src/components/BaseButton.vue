@@ -19,31 +19,33 @@ export default {};
     cursor: pointer;
 
     &--ok {
-        background-color: #54bcb2;
+        background-color: var(--color-btn-ok);
 
         &:hover {
-            background-color: lighten(#54bcb2, 15%);
+            background-color: var(--color-btn-ok-hover);
         }
     }
 
     &--cancel {
-        background-color: #ff765b;
+        background-color: white;
+        border: 1px solid black;
+        color: black;
         &:hover {
-            background-color: lighten(#ff765b, 15%);
+            background-color: var(--color-gray-hover);
         }
     }
 
     &--red {
-        background-color: #ff1818;
+        background-color: var(--color-btn-red);
         &:hover {
-            background-color: lighten(#ff1818, 15%);
+            background-color: var(--color-btn-red-hover);
         }
     }
 
     &--orange {
-        background-color: #ce7c00;
+        background-color: var(--color-btn-orange);
         &:hover {
-            background-color: lighten(#ce7c00, 15%);
+            background-color: var(--color-btn-orange-hover);
         }
     }
 }

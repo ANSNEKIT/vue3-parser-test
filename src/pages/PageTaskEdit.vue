@@ -1,24 +1,19 @@
 <template>
-    <div class="page-parser">
-        <h1 class="page-parser__title">Настройки парсера</h1>
+    <div class="page-task-edit">
+        <h1 class="page-task-edit__title">Редактировать задачу</h1>
 
-        <BaseForm class="page-parser__form" />
+        <BaseForm form-type="edit" :tags="['asdf', 'aljjhsjh']" />
     </div>
 </template>
 
 <script>
 import BaseForm from '@/components/BaseForm.vue';
 
-export default {
-    name: 'PageFormParse',
-    components: {
-        BaseForm,
-    },
-};
+export default { components: { BaseForm } };
 </script>
 
 <style lang="scss" scoped>
-.page-parser {
+.page-task-edit {
     width: 100%;
     height: 100%;
 

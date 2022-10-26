@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import PageFormParser from '@/pages/PageFormParser';
 import PageTasks from '@/pages/PageTasks';
 import PageTaskInfo from '@/pages/PageTaskInfo';
+import PageTaskEdit from '@/pages/PageTaskEdit';
 
 const routes = [
     {
@@ -13,6 +14,11 @@ const routes = [
         path: '/task/:id',
         name: 'Task',
         component: PageTaskInfo,
+    },
+    {
+        path: '/task/:id/edit',
+        name: 'TaskEdit',
+        component: PageTaskEdit,
     },
     {
         path: '/tasks',

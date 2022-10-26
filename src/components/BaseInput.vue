@@ -7,8 +7,10 @@
             :id="id"
             :type="type"
             :value="modelValue"
-            @input="$emit('update:modelValue', $event.target.value)"
+            v-bind="$attrs"
+            max-length="255"
             class="base-input__input"
+            @input="$emit('update:modelValue', $event.target.value)"
         />
     </div>
 </template>
@@ -61,7 +63,7 @@ export default {
         min-height: calc(1.4em + 26px);
         display: block;
 
-        background-color: #f1f1f1;
+        background-color: var(--color-input-bg);
         border: 2px solid rgba(0, 0, 0, 0.5);
         border-radius: 4px;
 
@@ -71,6 +73,9 @@ export default {
         &:focus {
             border: 2px solid black;
             background-color: white;
+        }
+        &:invalid {
+            border-color: var(--color-btn-red);
         }
     }
 }
