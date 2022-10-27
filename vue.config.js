@@ -3,6 +3,6 @@ module.exports = {
     devServer: {
         host: 'front.oohdeskbase.local',
         port: '8080',
-        proxy: 'https://parser.api-compas-goo.ru/',
+        // proxy: 'https://parser.api-compas-goo.ru/',
     },
 };

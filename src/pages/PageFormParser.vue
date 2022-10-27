@@ -45,15 +45,14 @@ export default {
                 });
 
                 if (resources[exchange] === resources['1']) {
-                    tasks = parsedData[0].freelancehabr_result;
+                    tasks = parsedData[parsedData.length - 2].freelancehabr_result;
                 } else if (resources[exchange] === resources['2']) {
-                    tasks = parsedData[0].kwork_result;
+                    tasks = parsedData[parsedData.length - 2].kwork_result;
                 } else {
-                    tasks = parsedData[0].freelancehabr_result;
-                    tasks.push(...parsedData[0].kwork_result);
+                    tasks = parsedData[parsedData.length - 2].freelancehabr_result;
+                    tasks.push(...parsedData[parsedData.length - 2].kwork_result);
                 }
 
-                console.log('pageForm', tasks);
                 this.getTasks(tasks);
                 this.getExchange(exchange);
 

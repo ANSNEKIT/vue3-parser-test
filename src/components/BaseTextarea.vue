@@ -34,6 +34,10 @@ export default {
     data: () => ({
         text: '',
     }),
+
+    mounted() {
+        this.text = this.modelValue;
+    },
 };
 </script>
 

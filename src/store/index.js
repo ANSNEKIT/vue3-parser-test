@@ -14,6 +14,11 @@ export default createStore({
         ],
         exchange: '',
     },
+    getters: {
+        getTaskById: (state) => (id) => {
+            return state.tasks.find((el) => Number(el.id) === Number(id)) ?? {};
+        },
+    },
     mutations: {
         updateTask(state, payload) {
             const taskIndex = state.tasks.findIndex((el) => Number(el.id) === Number(payload.id));
@@ -59,15 +64,15 @@ export default createStore({
             localStorage.setItem('exchange', JSON.stringify(exchange));
         },
 
-        getDeleteTask({ commit }, id) {
+        getDeleteTask({ commit, state }, id) {
             commit('setDeleteTask', id);
-            localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
+            localStorage.setItem('tasks', JSON.stringify(state.tasks));
+        },
+
+        getTask({ commit, state }, task) {
+            commit('updateTask', task);
+            localStorage.setItem('tasks', JSON.stringify(state.tasks));
         },
     },
     modules: {},
-    getters: {
-        getTaskById: (state) => (id) => {
-            return state.tasks.find((el) => Number(el.id) === Number(id)) ?? {};
-        },
-    },
 });

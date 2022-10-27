@@ -3,22 +3,10 @@
         <RouterLink to="/tasks" class="task-info__back link-btn">Назад</RouterLink>
 
         <section class="task-info__task card">
-            <h2 v-if="!isEdit" class="card__title">{{ task.title }}</h2>
-            <BaseInput v-else id="title" v-model="titleInp" class="card__title-inp" />
+            <h2 class="card__title">{{ task.title }}</h2>
 
             <ul class="card__tags">
                 <BaseTag v-for="(tag, idx) in task.keyword" :key="`tag-${idx}`">{{ tag }} </BaseTag>
-                <li class="card__tag-add-wrap">
-                    <BaseInput
-                        v-if="isAddTag"
-                        id="tag-add"
-                        v-model="newTag"
-                        class="card__tag-inp base-input--small"
-                    />
-                    <button v-if="isEdit" class="card__tag card__tag-add" @click="isAddTag = true">
-                        + Добавить
-                    </button>
-                </li>
             </ul>
 
             <p class="card__description">
@@ -31,15 +19,8 @@
 
             <div class="card__buttons">
                 <RouterLink :to="{ name: 'TaskEdit', params: { id: task.id } }">
-                    <BaseButton v-if="!isEdit" class="base-button--orange" @click="isEdit = true"
-                        >Редактировать</BaseButton
-                    >
+                    <BaseButton class="base-button--orange">Редактировать</BaseButton>
                 </RouterLink>
-
-                <BaseButton v-if="isEdit" class="base-button--cancel" @click="isEdit = false"
-                    >Отмена</BaseButton
-                >
-                <BaseButton v-if="isEdit" class="base-button--ok">Сохранить</BaseButton>
             </div>
         </section>
     </div>
@@ -48,31 +29,32 @@
 <script>
 import BaseButton from '@/components/BaseButton.vue';
 import { RouterLink } from 'vue-router';
-import BaseInput from '@/components/BaseInput.vue';
-import { mapGetters, mapState } from 'vuex';
-import BaseTag from '../components/BaseTag.vue';
+import { mapActions, mapGetters } from 'vuex';
+import BaseTag from '@/components/BaseTag.vue';
 
 export default {
     name: 'PageTaskInfo',
-    components: { BaseButton, RouterLink, BaseInput, BaseTag },
+    components: { BaseButton, RouterLink, BaseTag },
     data: () => ({
         isEdit: false,
         isAddTag: false,
-        titleInp: '',
-        newTag: '',
     }),
 
-    mounted() {
-        this.titleInp = this.title;
+    created() {
+        const tasksLocal = localStorage.getItem('tasks');
+        this.getTasks(JSON.parse(tasksLocal));
     },
 
     computed: {
-        ...mapState(['tasks']),
         ...mapGetters(['getTaskById']),
 
         task() {
-            return this.getTaskById(this.$route.params?.id);
+            return this.getTaskById(this.$route.params.id);
         },
+    },
+
+    methods: {
+        ...mapActions(['getTasks']),
     },
 };
 </script>
@@ -107,10 +89,6 @@ export default {
         text-align: left;
 
         margin-bottom: 20px;
-
-        &-inp {
-            margin-bottom: 20px;
-        }
     }
 
     &__tags {

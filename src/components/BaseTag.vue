@@ -1,7 +1,9 @@
 <template>
     <li class="tag">
         <slot />
-        <button v-if="isEdit" class="tag__delete"></button>
+        <div data-role="button" v-if="isEdit" class="tag__delete" @click="$emit('tagDelete', id)">
+            x
+        </div>
     </li>
 </template>
 
@@ -9,6 +11,10 @@
 export default {
     name: 'BaseTag',
     props: {
+        id: {
+            type: Number,
+            default: 0,
+        },
         tag: {
             type: String,
             default: '',
@@ -18,6 +24,7 @@ export default {
             default: false,
         },
     },
+    emits: ['tagDelete'],
 };
 </script>
 
@@ -50,11 +57,12 @@ export default {
         border: none;
         outline: none;
         border-radius: 1000px;
+        cursor: pointer;
 
-        &::after {
-            display: inline-block;
-            content: '\00d7';
-        }
+        // &::after {
+        //     display: inline-block;
+        //     content: '\00d7';
+        // }
 
         &:hover {
             background-color: #ccc;
