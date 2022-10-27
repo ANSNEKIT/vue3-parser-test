@@ -14,14 +14,26 @@ export default createStore({
         ],
     },
     mutations: {
-        setTasks(state, payload) {
+        updateTask(state, payload) {
             const taskIndex = state.tasks.findIndex(payload.id);
             if (taskIndex !== -1) {
                 state.tasks.splice(taskIndex, 1, payload);
             }
         },
+        setTasks(state, tasks) {
+            state.tasks = tasks;
+        },
     },
-    actions: {},
+    actions: {
+        getTasks({ commit }, tasks) {
+            const tasksWidthModifyKeyword = tasks.map((el) => {
+                const keyword = el.keyword.split(', ');
+                el.keyword = keyword;
+                return el;
+            });
+            commit('setTasks', tasksWidthModifyKeyword);
+        },
+    },
     modules: {},
     getters: {
         getTaskById: (state) => (id) => {

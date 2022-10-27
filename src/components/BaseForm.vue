@@ -57,7 +57,9 @@
         </template>
 
         <div class="form__buttons">
-            <BaseButton type="button" class="base-button--cancel">Отмена</BaseButton>
+            <BaseButton type="button" class="base-button--cancel" @click="onCancel"
+                >Отмена</BaseButton
+            >
             <BaseButton type="submit" class="base-button--ok" @click="onSubmit"
                 >Отправить</BaseButton
             >
@@ -91,6 +93,7 @@ export default {
             default: () => [],
         },
     },
+    emits: ['submitForm'],
     data: () => ({
         parseForm: {
             exchange: '1',
@@ -123,8 +126,30 @@ export default {
     }),
 
     methods: {
+        onCancel() {
+            if (this.formType === 'parser') {
+                this.parseForm = {
+                    exchange: '1',
+                    keyword: '',
+                };
+            } else {
+                this.editForm = {
+                    title: '',
+                    article: '',
+                    url: '',
+                    keyword: '',
+                };
+            }
+        },
+
         onSubmit(evt) {
             evt.preventDefault();
+
+            if (this.formType === 'parser') {
+                this.$emit('submitForm', this.parseForm);
+            } else {
+                this.$emit('submitForm', this.editForm);
+            }
         },
     },
 };
