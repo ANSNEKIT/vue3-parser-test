@@ -4,14 +4,14 @@
             <h2 class="card__title">{{ title }}</h2>
         </RouterLink>
         <ul class="card__tags">
-            <li v-for="(tag, index) in getKeywords" :key="`tag-${index}`" class="card__tag">
+            <li v-for="(tag, index) in keyword" :key="`tag-${index}`" class="card__tag">
                 {{ tag }}
             </li>
         </ul>
         <p class="card__description">
             {{ article }}
         </p>
-        <button class="card__close"></button>
+        <button class="card__close" @click="deleteTask"></button>
     </section>
 </template>
 
@@ -41,10 +41,10 @@ export default {
             default: () => [],
         },
     },
-
-    computed: {
-        getKeywords() {
-            return this.keyword.split(', ');
+    emits: ['deleteTask'],
+    methods: {
+        deleteTask() {
+            this.$emit('deleteTask', this.id);
         },
     },
 };
@@ -123,6 +123,7 @@ export default {
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        word-break: break-all;
     }
 
     &__close {

@@ -10,13 +10,14 @@
 import BaseForm from '@/components/BaseForm.vue';
 import { ParserConfigService } from '@/services/api.service.js';
 import { mapActions } from 'vuex';
+import { resources } from '@/common/constants.js';
 export default {
     name: 'PageFormParse',
     components: {
         BaseForm,
     },
     methods: {
-        ...mapActions(['getTasks']),
+        ...mapActions(['getTasks', 'getExchange']),
 
         async onSubmit({ exchange, keyword }) {
             const sources = [];
@@ -34,27 +35,27 @@ export default {
                 id_user: 0,
                 id_parsource: 0,
                 keywords: keyword,
-                hash_parsource: 'string-test12',
+                hash_parsource: 'string-test123',
             };
-            const prepareConfig = await ParserConfigService.post('/parser-config/', config);
+            const prepareConfig = await ParserConfigService.post(config);
 
             if (Object.keys(prepareConfig).length > 0) {
-                const parsedData = await ParserConfigService.get('/parser-config/', {
+                const parsedData = await ParserConfigService.get({
                     params: { hash_parsource: config.hash_parsource },
                 });
 
-                console.log(parsedData);
-
-                if (exchange === '1') {
+                if (resources[exchange] === resources['1']) {
                     tasks = parsedData[0].freelancehabr_result;
-                } else if (exchange === '2') {
+                } else if (resources[exchange] === resources['2']) {
                     tasks = parsedData[0].kwork_result;
                 } else {
                     tasks = parsedData[0].freelancehabr_result;
                     tasks.push(...parsedData[0].kwork_result);
                 }
 
+                console.log('pageForm', tasks);
                 this.getTasks(tasks);
+                this.getExchange(exchange);
 
                 this.$router.push({ name: 'Tasks' });
             }

@@ -1,69 +1,50 @@
 <template>
     <div class="page-tasks">
         <TheCard
-            id="0"
-            title="SDFlsdjkfj asdfl jasd fja sdf kljhsald"
-            article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? Ipsum consequatur, dolorum vero similique exercitationem modi deleniti consectetur necessitatibus? Eaque iusto temporibus possimus quos consequatur fugiat natus sit"
-            :keyword="['one', 'two']"
-            url="http://ya.ru"
-        />
-
-        <TheCard
-            id="1"
-            title="SDFlsdjkfj"
-            article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? Ipsum consequatur, dolorum vero similique exercitationem modi deleniti consectetur necessitatibus? Eaque iusto temporibus possimus quos consequatur fugiat natus sit"
-            :keyword="['one', 'two']"
-            url="http://ya.ru"
-        />
-
-        <TheCard
-            id="2"
-            title="SDFlsdjkfj asdfl jasd fja kljhsald"
-            article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. "
-            :keyword="['one', 'two']"
-            url="http://ya.ru"
-        />
-
-        <TheCard
-            id="3"
-            title="SDFlsdjkfj asdfl jasd fja sdf kljhsald asdfsdafasdfsadfasdf asdf sadfasdf "
-            article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? Ipsum consequatur, dolorum vero similique exercitationem modi deleniti consectetur necessitatibus? Eaque iusto temporibus possimus quos consequatur fugiat natus sit"
-            :keyword="['one', 'two']"
-            url="http://ya.ru"
-        />
-
-        <TheCard
-            id="4"
-            title="SDFlsdjkfj asdfl "
-            article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus"
-            :keyword="['one', 'two']"
-            url="http://ya.ru"
-        />
-
-        <TheCard
-            id="5"
-            title="SDFlsdjkfj"
-            article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? "
-            :keyword="['one', 'two']"
-            url="http://ya.ru"
-        />
-
-        <TheCard
-            id="6"
-            title="SDFlsdjkfj"
-            article="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet voluptatibus, aspernatur sapiente repellendus ab accusantium dignissimos. Perferendis nisi minus dolore, harum ullam vel eius qui cum odit, maiores, quae distinctio aperiam? "
-            :keyword="['one', 'two']"
-            url="http://ya.ru"
+            v-for="task in tasks"
+            :key="task.id"
+            :id="task.id"
+            :title="task.title"
+            :article="task.article"
+            :keyword="task.keyword"
+            :url="task.url"
+            @delete-task="onDeleteTask"
         />
     </div>
 </template>
 
 <script>
-import TheCard from '../components/TheCard.vue';
+import TheCard from '@/components/TheCard.vue';
+import { CrudApiService } from '@/services/api.service';
+import { resources } from '@/common/constants.js';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'PageParsedList',
     components: { TheCard },
+    created() {
+        const tasksData = localStorage.getItem('tasks');
+        const localExchange = localStorage.getItem('exchange');
+        if (tasksData) {
+            this.getTasks(JSON.parse(tasksData));
+        }
+        if (localExchange) {
+            this.getExchange(JSON.parse(localExchange));
+        }
+    },
+    computed: {
+        ...mapState(['tasks', 'exchange']),
+    },
+    methods: {
+        ...mapActions(['getTasks', 'getDeleteTask', 'getExchange']),
+
+        async onDeleteTask(id) {
+            if (resources[this.exchange]) {
+                await CrudApiService.delete(resources[this.exchange], id);
+                this.getDeleteTask(id);
+            }
+        },
+    },
 };
 </script>
 

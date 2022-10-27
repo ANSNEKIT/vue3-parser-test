@@ -7,7 +7,7 @@ export class ReadonlyApiService {
     }
 
     static async getEntityById(resource, id, config = {}) {
-        const { data } = await axios.get(`${resource}/${id}`, config);
+        const { data } = await axios.get(`api/${resource}/${id}/`, config);
         return data;
     }
 }
@@ -19,17 +19,17 @@ export class CrudApiService extends ReadonlyApiService {
     }
 
     static async put(resource, entity) {
-        const { data } = await axios.post(`${resource}/${entity.id}`, entity);
+        const { data } = await axios.put(`api/${resource}/${entity.id}/`, entity);
         return data;
     }
 
     static async patch(resource, entity) {
-        const { data } = await axios.post(`${resource}/${entity.id}`, entity);
+        const { data } = await axios.patch(`api/${resource}/${entity.id}/`, entity);
         return data;
     }
 
     static async delete(resource, id) {
-        const { data } = await axios.post(`${resource}/${id}`, id);
+        const { data } = await axios.delete(`api/${resource}/${id}/`, id);
         return data;
     }
 }
@@ -41,8 +41,9 @@ export class ParserConfigService extends CrudApiService {
     hash;
     sources;
 
-    static async post(resource, config = {}) {
-        const data = await CrudApiService.post(resource, config);
+    static async post(config = {}) {
+        const route = '/parser-config/';
+        const data = await CrudApiService.post(route, config);
 
         this.userId = data.id_user;
         this.parsourceId = data.id_parsource;
@@ -52,8 +53,9 @@ export class ParserConfigService extends CrudApiService {
         return data;
     }
 
-    static async get(resource, config = {}) {
-        const data = await CrudApiService.get(resource, config);
+    static async get(config = {}) {
+        const route = '/parser-config/';
+        const data = await CrudApiService.get(route, config);
         const filtered = this._filterByConfig(data);
         return filtered;
     }
