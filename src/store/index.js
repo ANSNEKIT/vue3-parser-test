@@ -1,4 +1,7 @@
 import { createStore } from 'vuex';
+import { ParserConfigService } from '@/services/parser-config.service';
+import { setLocalStorage } from '@/common/localStorage';
+import { getLocalStorage, hasKeyInLocalStorage } from '../common/localStorage';
 
 export default createStore({
     state: {
@@ -43,35 +46,44 @@ export default createStore({
         },
     },
     actions: {
-        getTasks({ commit }, tasks) {
-            if (tasks.length > 0) {
-                const tasksWidthModifyKeyword = tasks.map((el) => {
-                    if (!Array.isArray(el.keyword)) {
-                        const keyword = el.keyword.split(', ');
-                        el.keyword = keyword;
-                    }
-                    el.id = String(el.id);
-                    return el;
-                });
+        async fetchTasks({ commit, state }, { parserConfig, getParserConfig }) {
+            const postData = await ParserConfigService.post(parserConfig);
 
-                localStorage.setItem('tasks', JSON.stringify(tasksWidthModifyKeyword));
-                commit('setTasks', tasksWidthModifyKeyword);
+            if (Object.keys(postData).length > 0) {
+                const tasks = await ParserConfigService.get(getParserConfig, state.exchange);
+
+                commit('setTasks', tasks);
+                setLocalStorage('tasks', tasks);
             }
         },
 
-        getExchange({ commit }, exchange) {
+        getTasks({ commit, state }) {
+            if (state.tasks.length === 0 && hasKeyInLocalStorage('tasks')) {
+                const tasks = getLocalStorage('tasks');
+                commit('setTasks', tasks);
+            }
+        },
+
+        actionExchange({ commit }, exchange) {
             commit('setExchange', exchange);
-            localStorage.setItem('exchange', JSON.stringify(exchange));
+            setLocalStorage('exchange', exchange);
         },
 
-        getDeleteTask({ commit, state }, id) {
+        getExchange({ commit, state }) {
+            if (!state.exchange && hasKeyInLocalStorage('exchange')) {
+                const exchange = getLocalStorage('exchange');
+                commit('setExchange', exchange);
+            }
+        },
+
+        actionDeleteTask({ commit, state }, id) {
             commit('setDeleteTask', id);
-            localStorage.setItem('tasks', JSON.stringify(state.tasks));
+            setLocalStorage('tasks', state.tasks);
         },
 
-        getTask({ commit, state }, task) {
+        actionUpdateTask({ commit, state }, task) {
             commit('updateTask', task);
-            localStorage.setItem('tasks', JSON.stringify(state.tasks));
+            setLocalStorage('tasks', state.tasks);
         },
     },
     modules: {},

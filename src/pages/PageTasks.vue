@@ -23,25 +23,19 @@ export default {
     name: 'PageParsedList',
     components: { TheCard },
     created() {
-        const tasksData = localStorage.getItem('tasks');
-        const localExchange = localStorage.getItem('exchange');
-        if (tasksData) {
-            this.getTasks(JSON.parse(tasksData));
-        }
-        if (localExchange) {
-            this.getExchange(JSON.parse(localExchange));
-        }
+        this.getTasks();
+        this.getExchange();
     },
     computed: {
         ...mapState(['tasks', 'exchange']),
     },
     methods: {
-        ...mapActions(['getTasks', 'getDeleteTask', 'getExchange']),
+        ...mapActions(['getTasks', 'actionDeleteTask', 'getExchange']),
 
         async onDeleteTask(id) {
             if (resources[this.exchange]) {
                 await CrudApiService.delete(resources[this.exchange], id);
-                this.getDeleteTask(id);
+                this.actionDeleteTask(id);
             }
         },
     },

@@ -59,11 +59,6 @@ export default {
         border-radius: 1000px;
         cursor: pointer;
 
-        // &::after {
-        //     display: inline-block;
-        //     content: '\00d7';
-        // }
-
         &:hover {
             background-color: #ccc;
         }

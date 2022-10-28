@@ -41,8 +41,7 @@ export default {
     }),
 
     created() {
-        const tasksLocal = localStorage.getItem('tasks');
-        this.getTasks(JSON.parse(tasksLocal));
+        this.getTasks();
     },
 
     computed: {
@@ -68,15 +67,15 @@ export default {
     height: 100%;
 }
 .card {
-    max-width: 70%;
-    min-width: 470px;
+    width: 70%;
+    min-width: max-content;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
     padding: 30px;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 0;
 
     border-radius: 4px;
     border: 1px solid var(--color-border);

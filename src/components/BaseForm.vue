@@ -1,5 +1,5 @@
 <template>
-    <form action="" method="post" @keydown="onEnterForm" class="form">
+    <form class="form" @keydown="onEnterForm">
         <template v-if="formType === 'parser'">
             <BaseSelect
                 id="exchange"

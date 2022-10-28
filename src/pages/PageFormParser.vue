@@ -8,20 +8,17 @@
 
 <script>
 import BaseForm from '@/components/BaseForm.vue';
-import { ParserConfigService } from '@/services/api.service.js';
 import { mapActions } from 'vuex';
-import { resources } from '@/common/constants.js';
 export default {
     name: 'PageFormParse',
     components: {
         BaseForm,
     },
     methods: {
-        ...mapActions(['getTasks', 'getExchange']),
+        ...mapActions(['fetchTasks', 'actionExchange']),
 
         async onSubmit({ exchange, keyword }) {
             const sources = [];
-            let tasks = [];
 
             if (exchange === '3') {
                 sources.push('1');
@@ -30,34 +27,21 @@ export default {
                 sources.push(exchange);
             }
 
-            const config = {
+            const parserConfig = {
                 sources,
                 id_user: 0,
                 id_parsource: 0,
                 keywords: keyword,
                 hash_parsource: 'string-test123',
             };
-            const prepareConfig = await ParserConfigService.post(config);
+            const getParserConfig = {
+                params: { hash_parsource: parserConfig.hash_parsource },
+            };
 
-            if (Object.keys(prepareConfig).length > 0) {
-                const parsedData = await ParserConfigService.get({
-                    params: { hash_parsource: config.hash_parsource },
-                });
+            this.actionExchange(exchange);
+            await this.fetchTasks({ parserConfig, getParserConfig });
 
-                if (resources[exchange] === resources['1']) {
-                    tasks = parsedData[parsedData.length - 2].freelancehabr_result;
-                } else if (resources[exchange] === resources['2']) {
-                    tasks = parsedData[parsedData.length - 2].kwork_result;
-                } else {
-                    tasks = parsedData[parsedData.length - 2].freelancehabr_result;
-                    tasks.push(...parsedData[parsedData.length - 2].kwork_result);
-                }
-
-                this.getTasks(tasks);
-                this.getExchange(exchange);
-
-                this.$router.push({ name: 'Tasks' });
-            }
+            this.$router.push({ name: 'Tasks' });
         },
     },
 };

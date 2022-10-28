@@ -10,28 +10,19 @@
 import BaseForm from '@/components/BaseForm.vue';
 import { CrudApiService } from '@/services/api.service';
 import { resources } from '@/common/constants.js';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
     name: 'PageTaskEdit',
     components: { BaseForm },
 
     created() {
-        const tasksLocal = localStorage.getItem('tasks');
-        if (tasksLocal) {
-            this.getTasks(JSON.parse(tasksLocal));
-        }
-        const exchange = localStorage.getItem('exchange');
-        if (exchange) {
-            this.exchange = JSON.parse(exchange);
-        }
+        this.getTasks();
+        this.getExchange();
     },
 
-    data: () => ({
-        exchange: '',
-    }),
-
     computed: {
+        ...mapState(['exchange']),
         ...mapGetters(['getTaskById']),
 
         task() {
@@ -40,15 +31,20 @@ export default {
     },
 
     methods: {
-        ...mapActions(['getTasks', 'getTask']),
+        ...mapActions(['getTasks', 'getExchange', 'actionUpdateTask']),
+
         async onEdit(taskParams) {
             const task = { ...taskParams };
-            task.keyword = task.keyword.join(', ');
+
+            delete task.newKeyword;
             task.id = this.task.id;
+            task.keyword = task.keyword.join(', ');
 
             if (resources[this.exchange]) {
                 await CrudApiService.put(resources[this.exchange], task);
-                await this.getTask(task);
+
+                task.keyword = task.keyword.split(', ');
+                await this.actionUpdateTask(task);
             }
 
             this.$router.push({ name: 'Task', params: { id: task.id } });
